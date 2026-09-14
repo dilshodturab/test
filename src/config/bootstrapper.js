@@ -1,6 +1,7 @@
+const { PORT } = require("./env");
 const { ordersRoutes } = require("../routes/orders.route");
 const { productsRoutes } = require("../routes/products.route");
-const { PORT } = require("./env");
+const { errorHandler } = require("./error-handler");
 
 module.exports.appBootstrapper = async (app) => {
   app.use("/api/v1/products", productsRoutes);
