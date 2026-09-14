@@ -11,5 +11,6 @@ module.exports.appBootstrapper = async (app) => {
       message: "Trust me bro your backend is running1"
     })
   });
+  app.use(errorHandler);
   app.listen(PORT, () => { console.log(`Bro your app is listening the port: ${PORT}`) });
 }
