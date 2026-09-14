@@ -4,8 +4,8 @@ Concurrent Order & Inventory Reservation Service
 - [x] fayl struktura va kerakli fayllarni yaratib olish.
 - [x] app bootstrap qilish, error handlinglarni chiqish
 - [x] dockerizing. 
-- [ ] DB schemalarni app bootstrap bo'lganda initialize qilish. 
-- [ ]
+- [x] DB schemalarni app bootstrap bo'lganda initialize qilish. 
+- [ ] 
 
 ## Decisions
 1. Appdan kutilgan narsalar ya'ni asosiy taskning ustida ishlash uchun avval qilinishi kerak bo'lgan narsalarni birinchi qilib oldim. Shu qatorda kerakli fayllarni yaratib oldim ichiga hech narsa yozmasam ham. Sabab endi bundan buyog'iga faqat kod yozish bilan shug'ullanaman. 
