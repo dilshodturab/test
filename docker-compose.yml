@@ -5,7 +5,7 @@ services:
       - "3000:3000"
     environment:
       PORT: 3000
-      NODE_ENV: ${ENV}
+      NODE_ENV: ${NODE_ENV}
       SECRET: ${SECRET}
       DB_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       REDIS_URL: redis://redis:6379
