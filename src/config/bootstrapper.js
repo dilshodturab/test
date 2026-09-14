@@ -1,4 +1,4 @@
-const { PORT } = require("./env");
+const { PORT, ENV } = require("./env");
 const { ordersRoutes } = require("../routes/orders.route");
 const { productsRoutes } = require("../routes/products.route");
 const { errorHandler } = require("./error-handler");
@@ -13,5 +13,5 @@ module.exports.appBootstrapper = async (app) => {
     })
   });
   app.use(errorHandler);
-  app.listen(PORT, () => { console.log(`Bro your app is listening the port: ${PORT}`) });
+  app.listen(PORT, () => { console.log(`Bro your app is running in ${ENV} and listening the port: ${PORT}`) });
 }
