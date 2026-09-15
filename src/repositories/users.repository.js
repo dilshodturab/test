@@ -15,6 +15,15 @@ module.exports = {
       [data.username, data.password]
     );
 
-    return result.rows[0]
-  }
+    return result.rows[0];
+  },
+
+  async findById(id) {
+    const result = await pool.query(
+      `select id, created_at, username from users where id = $1 limit 1`,
+      [id]
+    );
+
+    return result.rows[0] || null;
+ }
 }

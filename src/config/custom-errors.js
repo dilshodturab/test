@@ -15,7 +15,6 @@ class CustomThrowError {
 
 class CustomCatchError {
 	constructor(err) {
-		console.log(err)
 		if (err instanceof CustomThrowError) {
 			this.error = err.error;
 			this.status = err.status;
