@@ -6,8 +6,9 @@ Concurrent Order & Inventory Reservation Service
 - [x] dockerizing. 
 - [x] DB schemalarni app bootstrap bo'lganda initialize qilish. 
 - [x] user registration.
-- [ ] user login.
-- [ ] Auth implementation.
+- [x] user login.
+- [x] Auth implementation.
+- [ ] Product create qilish
 
 
 ## Decisions
