@@ -22,3 +22,13 @@ module.exports.register = async (data) => {
 
 	return { user, token: generateToken(user) };
 };
+
+module.exports.login = async (data) => {
+  const user = await usersRepository.findByUsername(data.username);
+  if (!user) { throw new CustomThrowError("Invalid username or password", 401) }
+
+  const isMatch = await bcrypt.compare(data.password, user.password);
+  if (!isMatch) { throw new CustomThrowError("Invalid username or password", 401) }
+
+  return generateToken(user);
+}
