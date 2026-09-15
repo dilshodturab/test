@@ -8,7 +8,8 @@ Concurrent Order & Inventory Reservation Service
 - [x] user registration.
 - [x] user login.
 - [x] Auth implementation.
-- [ ] Product create qilish
+- [x] Product creation.
+- [ ] order creation. work in progress
 
 
 ## Decisions
