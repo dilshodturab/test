@@ -13,15 +13,9 @@ Concurrent Order & Inventory Reservation Service
 
 
 ## Decisions
-- Appdan kutilgan narsalar ya'ni asosiy taskning ustida ishlash uchun avval qilinishi kerak bo'lgan narsalarni birinchi qilib oldim. Shu qatorda kerakli fayllarni yaratib oldim ichiga hech narsa yozmasam ham. Sabab endi bundan buyog'iga faqat kod yozish bilan shug'ullanaman. 
-
-- db-ga ulanish va app bootstrap bo'lganida connectionni tekshirib olish logikasini boshqa loyihalarimdan bu yoqqa o'tkazib qo'ydim, bunaqa logicani clientlar talabi bilan qilingan, agar db uxlasa tizim shunchaki o'chib qolishidan oldin 3 marta urinib ko'radi agar ulana olmasa keyin log qilib yozib qo'yadi.
-
-- Dockerize qilib oldim sabab men ishimni tugatdim deganimdan keyin yana boshqa ish qilmayman, men yozgan ko'dim localda va dockerda ham ishlashini realvaqtda ko'rib turaman, hamma logicani qilib bo'lganimdan keyin dockerga o'tgazganimda kutilmagan xatolik chiqish extimolini kamaytirdim.
-
 - Jadvallar hozircha 3ta bo'ldi, users jadvalini jwt li authorization talab qilingani uchun qo'shdim. userlardan hozircha username va passwordan boshqa inputlarni kutish ortiqcha deb bildim.
 
-- Jadvallarda id uchun uuid ishlatildi. "Because you know why. Who uses int as id nowadays?" ok jokes aside: UUIDni ishlatganimning sababi birinchidan uniquelik haqida bosh qotirmayman, ikkinchidan har bitta table uchun alohida alohida sequence ochib yurishdan ham qutilaman.
+- Jadvallarda id uchun uuid ishlatildi. "Because you know why. Who uses int as id nowadays?" UUIDni ishlatganimning sababi birinchidan uniquelik haqida bosh qotirmayman, ikkinchidan har bitta table uchun alohida alohida sequence ochib yurishdan ham qutilaman.
 
 - orders jadvalida created_by column bilan bir userning orderi boshqa user orderlari orasida chiqib qolishi oldini oldim.
 
