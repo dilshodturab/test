@@ -14,6 +14,8 @@ Concurrent Order & Inventory Reservation Service
 ## Decisions
 - Appdan kutilgan narsalar ya'ni asosiy taskning ustida ishlash uchun avval qilinishi kerak bo'lgan narsalarni birinchi qilib oldim. Shu qatorda kerakli fayllarni yaratib oldim ichiga hech narsa yozmasam ham. Sabab endi bundan buyog'iga faqat kod yozish bilan shug'ullanaman. 
 
+- db-ga ulanish va app bootstrap bo'lganida connectionni tekshirib olish logikasini boshqa loyihalarimdan bu yoqqa o'tkazib qo'ydim, bunaqa logicani clientlar talabi bilan qilingan, agar db uxlasa tizim shunchaki o'chib qolishidan oldin 3 marta urinib ko'radi agar ulana olmasa keyin log qilib yozib qo'yadi.
+
 - Dockerize qilib oldim sabab men ishimni tugatdim deganimdan keyin yana boshqa ish qilmayman, men yozgan ko'dim localda va dockerda ham ishlashini realvaqtda ko'rib turaman, hamma logicani qilib bo'lganimdan keyin dockerga o'tgazganimda kutilmagan xatolik chiqish extimolini kamaytirdim.
 
 - Jadvallar hozircha 3ta bo'ldi, users jadvalini jwt li authorization talab qilingani uchun qo'shdim. userlardan hozircha username va passwordan boshqa inputlarni kutish ortiqcha deb bildim.
@@ -22,6 +24,10 @@ Concurrent Order & Inventory Reservation Service
 
 - orders jadvalida created_by column bilan bir userning orderi boshqa user orderlari orasida chiqib qolishi oldini oldim.
 
-- orderga taskda aytilganidek bir necha xil item biriktirsa bo'ladi, lekin itemlarning quantitysini o'zgartirib bo'lmaydi ya'ni biriktirilgan itemni 1ta item deb olib ketayapman va o'sha biriktirilgan itemni stock quantitysidan -1 qilayapman. Agar itemlarni orderga biriktirishda quantitysi ham adjust qilish imkoniyati bo'lsin deyilganda orderga biriktirilgan itemni va uning quantitysini ham kiritadigan qilib qo'yar edim.
+- orderga taskda aytilganidek bir necha xil item biriktirsa bo'ladi, orderga biriktirilgan itemlarning quantitysini o'zgartirib bo'lmaydi ya'ni biriktirilgan itemni 1ta item deb olib ketayapman va o'sha biriktirilgan itemni stock quantitysidan -1 qilayapman. 
 
-- db-ga ulanish va app bootstrap bo'lganida connectionni tekshirib olish logikasini boshqa loyihalarimdan bu yoqqa o'tkazib qo'ydim, bunaqa logicani clientlar talabi bilan qilingan, agar db uxlasa tizim shunchaki o'chib qolishidan oldin 3 marta urinib ko'radi agar ulana olmasa keyin log qilib yozib qo'yadi.
+- idempotency-keyni client generate qilib backendga beradi. idempotency-keyni saqlab qo'yaman keyingi safar yana o'sha key bilan urinish qilib ko'rsa men idempotency key bilan orderlar orasidan idem_key ga teng bo'lgan orderni qidirib ko'raman agar shunday order topilsa va hech narsa qilmasdan shunchaki success responce qaytaraman. Agar unday keyli order topilmasa demak birinchi marta so'rov yuborganday tizim order yaratadi tanlangan product stock_quantitydan - qiladi.
+
+- client generate qilgan idempotency-keyni uuid bo'lishligi majburiy.
+
+-
