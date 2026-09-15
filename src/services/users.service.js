@@ -20,7 +20,7 @@ module.exports.register = async (data) => {
 	}
 	const user = await usersRepository.createUser(userData);
 
-	return { user, token: generateToken(user) };
+	return generateToken(user);
 };
 
 module.exports.login = async (data) => {
