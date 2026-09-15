@@ -15,7 +15,6 @@ module.exports.seedTables = async () => {
         id uuid primary key default gen_random_uuid(),
         created_at timestamp default current_timestamp,
         username varchar(50) not null unique,
-        email varchar(100) not null unique,
         password varchar(255) not null
         );
 
@@ -30,6 +29,7 @@ module.exports.seedTables = async () => {
       create table if not exists orders (
         id uuid primary key default gen_random_uuid(),
         created_at timestamp default current_timestamp,
+        created_by uuid,
         status order_status not null default 'pending',
         idem_key varchar(255),
         products uuid[] default '{}'

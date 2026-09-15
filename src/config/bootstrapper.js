@@ -3,10 +3,12 @@ const { ordersRoutes } = require("../routes/orders.route");
 const { productsRoutes } = require("../routes/products.route");
 const { errorHandler } = require("./error-handler");
 const { seedTables } = require("./seeding");
+const { usersRoute } = require("../routes/users.route");
 
 module.exports.appBootstrapper = async (app) => {
   await seedTables();
 
+  app.use("/api/v1/users", usersRoute);
   app.use("/api/v1/products", productsRoutes);
   app.use("/api/v1/orders", ordersRoutes);
   app.get("/api/v1/health", (req, res) => {
