@@ -17,5 +17,13 @@ module.exports = {
     );
 
     return result.rows[0] || null;
+  },
+
+  async all() {
+    const result = await pool.query(
+      `select * from products`
+    );
+
+    return result.rows;
   }
 }

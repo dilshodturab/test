@@ -4,3 +4,4 @@ const { auth } = require("../config/auth");
 
 module.exports.productsRoutes = Router()
   .post("/", auth, controller.create)
+  .get("/", auth, controller.all)

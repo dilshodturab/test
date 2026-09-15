@@ -7,3 +7,7 @@ module.exports.create = async (data) => {
 
   await productsRepository.create(data);
 }
+
+module.exports.all = async () => {
+  return await productsRepository.all();
+}
