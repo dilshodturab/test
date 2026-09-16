@@ -36,6 +36,15 @@ module.exports.getStatus = async (req, res, next) => {
   } catch(error) {next(error)}
 }
 
+module.exports.confirm = async (req, res, next) => {
+  try{
+    const userId = req.user.id;
+    const orderId = isUUID("Order id", req.params.id);
+    await ordersService.confirm(orderId, userId);
+    return res.status(200).json({ success: true, message: "Order confirmed successfully" });
+  }catch(error) {next(error)}
+}
+
 module.exports.cancel = async (req, res, next) => {
   try {
     const userId = req.user.id;

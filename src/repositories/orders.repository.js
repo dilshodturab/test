@@ -37,6 +37,15 @@ module.exports = {
     return result.rows[0] || null;
   },
 
+  async confirm(orderId) {
+    const result = await pool.query(
+      `update orders set status = 'confirmed' where id = $1 returning status`,
+      [orderId]
+    );
+
+    return result.rows[0];
+  },
+
   async cancel(orderId) {
     const result = await pool.query(
       `update orders set status = 'cancelled' where id=$1 returning status`,

@@ -37,14 +37,21 @@ module.exports.getStatus = async (orderId) => {
   return foundOrder.status;
 }
 
+module.exports.confirm = async (orderId, userId) => {
+  const order = await ordersRepository.findBy("id", orderId);
+  if(!order) {throw new CustomThrowError("Order not found", 404)}
+  if(order.status !== "pending") { throw new CustomThrowError("Only pending orders can be confirmed", 409)}
+  if(order.created_by !== userId) { throw new CustomThrowError("Fobidden: You cannot confirm this order", 403)}
+
+  return await ordersRepository.confirm(orderId);
+}
+
 module.exports.cancel = async (orderId, userId) => {
   const order = await ordersRepository.findBy("id", orderId);
   if(!order) {throw new CustomThrowError("Order not found", 404)}
   if(order.created_by !== userId) { throw new CustomThrowError("Fobidden: You cannot cancel this order", 403)}
   if(order.status !== "pending") { throw new CustomThrowError("Only pending orders can be cancelled", 409)}
 
-  for (let productId of order.products) {
-    await productsRepository.restoreStockQty(productId);
-  }
+  for (let productId of order.products) { await productsRepository.restoreStockQty(productId) }
   return await ordersRepository.cancel(orderId);
 }
