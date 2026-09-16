@@ -34,3 +34,19 @@ Concurrent Order & Inventory Reservation Service
 - client generate qilgan idempotency-keyni uuid bo'lishligi majburiy.
 
 - orderni faqat create qilgan odam cancel qila oladigan qilinishi kerak. Buning uchun order created_by degan columndan foydalanaman.
+
+## All routes
+users ga tegishli endpointlardan tashqari barcha endpointlar Bearer token so'raydi.
+
+users
+- post /api/v1/users/register -> yangi user qo'shish username va password majburiy
+- post /api/v1/users/login -> register qilingan userni auth qilish uchun token 50minutda expire bo'ladi.
+products
+- post /api/v1/products/ -> product qo'shish uchun endpoint, name price va stock_quantity majbury.
+- get /api/v1/products/ -> hamma productlar listini chiqarib olinadi. Order create qilishda shu yerdan product id olinadi.
+orders
+- post /api/v1/orders -> yangi order yaratish uchun kerak bo'ladi. products degan keyda array qabul qiladi.
+- post /api/v1/orders/:id/confirm -> orderlarni confirm qilish uchun endpoint. Orderni yaratgan user confirm qila oladi.
+- post /api/v1/orders/:id/cancel -> orderlarni cancel qilish uchun endpoint. Orderni yaratgan user cancel qila oladi.
+- get /api/v1/orders -> userga tegishli hamma orderlarni olib kelish uchun endpoint
+- get /api/v1/orders/:id -> order statusini qaytaradigan endpoint
