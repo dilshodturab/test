@@ -10,10 +10,28 @@ module.exports = {
     return result.rows[0];
   },
 
+  async subtractOneById(id) {
+    const result = await pool.query(
+      `update products set stock_quantity = stock_quantity-1 where id = $1 returning id, stock_quantity`,
+      [id]
+    );
+
+    return result.rows[0];
+  },
+
   async findByName(name) {
     const result = await pool.query(
       `select * from products where name = $1`,
       [name]
+    );
+
+    return result.rows[0] || null;
+  },
+
+  async findById(id) {
+    const result = await pool.query(
+      `select * from products where id = $1`,
+      [id]
     );
 
     return result.rows[0] || null;

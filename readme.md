@@ -2,7 +2,7 @@ Concurrent Order & Inventory Reservation Service
 
 ## TODO
 - [x] fayl struktura va kerakli fayllarni yaratib olish.
-- [x] app bootstrap qilish, error handlinglarni chiqish
+- [x] app bootstrap qilish, error handlinglarni chiqish.
 - [x] dockerizing. 
 - [x] DB schemalarni app bootstrap bo'lganda initialize qilish. 
 - [x] user registration.
@@ -10,6 +10,11 @@ Concurrent Order & Inventory Reservation Service
 - [x] Auth implementation.
 - [x] Product creation.
 - [ ] order creation. work in progress
+- [ ] get /orders/:id endpoint implementation.
+- [ ] order createion qilishni idempotent qilish. 
+- [ ] product creationga concurrent correctnes qo'shish.
+- [ ] redis caching qo'shish.
+
 
 
 ## Decisions

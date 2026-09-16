@@ -12,6 +12,6 @@ module.exports.create = async (req, res, next) => {
 module.exports.all = async (req, res, next) => {
   try {
     const result = await productsService.all();
-    return res.status(200).json({success: true, data: result})
+    return res.status(200).json({ success: true, data: result });
   } catch(error) { next(error) }
 }
