@@ -1,13 +1,21 @@
 const INTERVAL_MS = 1000 * 60;
+const ordersService = require("../services/orders.service");
 
-async function backgroundJob() {
-  console.log("1 daqiqa o'tdi");
+async function backgroundRunner() {
   try {
-    // 1. query
-    // 2. cancel
+   await ordersService.autoCancelOrders();
   } catch (error) {
-    console.log(error)
+    console.error("Background job error:", error.message);
   }
 }
 
-setInterval(backgroundJob, INTERVAL_MS);
+module.exports.backgroundJob = () => {
+  console.log("Background job started");
+
+  const loop = async () => {
+    await backgroundRunner();
+    setTimeout(loop, INTERVAL_MS);
+  };
+
+  loop();
+};

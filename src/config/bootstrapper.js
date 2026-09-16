@@ -4,9 +4,11 @@ const { productsRoutes } = require("../routes/products.route");
 const { errorHandler } = require("./error-handler");
 const { seedTables } = require("./seeding");
 const { usersRoute } = require("../routes/users.route");
+const { backgroundJob } = require("./background");
 
 module.exports.appBootstrapper = async (app) => {
   await seedTables();
+  await backgroundJob();
 
   app.use("/api/v1/users", usersRoute);
   app.use("/api/v1/products", productsRoutes);

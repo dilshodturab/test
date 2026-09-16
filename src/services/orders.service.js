@@ -25,6 +25,14 @@ module.exports.findAllOrdersOfUser = async (userId) => {
   return await ordersRepository.find("created_by", userId);
 }
 
+module.exports.autoCancelOrders = async () => {
+  const orders = await ordersRepository.findPendingOrders();
+
+  for (let order of orders) {
+    await ordersRepository.cancel(order.id);
+  }
+}
+
 module.exports.getStatus = async (orderId) => {
   const validId = isUUID("Order id", orderId);
 

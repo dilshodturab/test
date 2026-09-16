@@ -37,6 +37,14 @@ module.exports = {
     return result.rows[0] || null;
   },
 
+  async findPendingOrders() {
+    const result = await pool.query(
+      `select * from orders  where status = 'pending' and created_at <= now() - interval '15 minutes'`
+    );
+
+    return result.rows;
+  },
+
   async confirm(orderId) {
     const result = await pool.query(
       `update orders set status = 'confirmed' where id = $1 returning status`,

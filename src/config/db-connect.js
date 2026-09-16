@@ -3,6 +3,7 @@ const { DB_URL } = require('./env');
 
 const pool = new Pool({
 	connectionString: DB_URL,
+  options: '-c timezone=Asia/Tashkent',
 });
 
 pool.on('error', (err) => {
