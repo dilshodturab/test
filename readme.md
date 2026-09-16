@@ -11,7 +11,8 @@ Concurrent Order & Inventory Reservation Service
 - [x] Product creation.
 - [x] order creation. work in progress
 - [x] order createion qilishni idempotent qilish. 
-- [ ] get /orders/:id endpoint implementation.
+- [x] get /orders/:id endpoint implementation.
+- [ ] orderni cancel qilish.
 - [ ] product creationga concurrent correctnes qo'shish.
 - [ ] redis caching qo'shish.
 
@@ -30,4 +31,4 @@ Concurrent Order & Inventory Reservation Service
 
 - client generate qilgan idempotency-keyni uuid bo'lishligi majburiy.
 
--
+- orderni faqat create qilgan odam cancel qila oladigan qilinishi kerak. Buning uchun order created_by degan columndan foydalanaman.

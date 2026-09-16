@@ -10,6 +10,23 @@ module.exports = {
     return result.rows[0];
   },
 
+  async all() {
+    const result = await pool.query(
+      `select * from products`
+    );
+
+    return result.rows;
+  },
+
+  async findBy(key, value) {
+    const result = await pool.query(
+      `select * from products where ${key} = $1`,
+      [value]
+    );
+
+    return result.rows[0] || null;
+  },
+
   async subtractOneById(id) {
     const result = await pool.query(
       `update products set stock_quantity = stock_quantity-1 where id = $1 returning id, stock_quantity`,
@@ -19,29 +36,12 @@ module.exports = {
     return result.rows[0];
   },
 
-  async findByName(name) {
+  async restoreStockQty(id) {
     const result = await pool.query(
-      `select * from products where name = $1`,
-      [name]
-    );
-
-    return result.rows[0] || null;
-  },
-
-  async findById(id) {
-    const result = await pool.query(
-      `select * from products where id = $1`,
+      `update products set stock_quantity = stock_quantity+1 where id = $1 returning id, stock_quantity`,
       [id]
     );
 
-    return result.rows[0] || null;
-  },
-
-  async all() {
-    const result = await pool.query(
-      `select * from products`
-    );
-
-    return result.rows;
+    return result.rows[0];
   }
 }
