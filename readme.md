@@ -12,7 +12,7 @@ Concurrent Order & Inventory Reservation Service
 - [x] order creation. work in progress
 - [x] order createion qilishni idempotent qilish. 
 - [x] get /orders/:id endpoint implementation.
-- [ ] orderni cancel qilish.
+- [x] orderni cancel qilish.
 - [ ] product creationga concurrent correctnes qo'shish.
 - [ ] redis caching qo'shish.
 
