@@ -9,9 +9,9 @@ Concurrent Order & Inventory Reservation Service
 - [x] user login.
 - [x] Auth implementation.
 - [x] Product creation.
-- [ ] order creation. work in progress
+- [x] order creation. work in progress
+- [x] order createion qilishni idempotent qilish. 
 - [ ] get /orders/:id endpoint implementation.
-- [ ] order createion qilishni idempotent qilish. 
 - [ ] product creationga concurrent correctnes qo'shish.
 - [ ] redis caching qo'shish.
 

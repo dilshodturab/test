@@ -7,11 +7,11 @@ module.exports.create = async (data) => {
   const productsIds = data.products;
   const idemKey = isUUID("Idempotency key", data.idem_key);
 
-  const validIdemKey = await ordersRepository.findByIdemKey(idemKey);
+  const validIdemKey = await ordersRepository.findBy("idem_key", idemKey);
   if (validIdemKey) { return validIdemKey; }
 
   for (let productId of productsIds) {
-    const foundOrder = await productsRepository.findById(productId);
+    const foundOrder = await productsRepository.findBy("id", productId);
     if (!foundOrder) {
       throw new CustomThrowError(`${productId} is not found`, 404);
     }
@@ -22,4 +22,17 @@ module.exports.create = async (data) => {
   }
 
   return await ordersRepository.create(data);
+}
+
+module.exports.findAllOrdersOfUser = async (userId) => {
+  return await ordersRepository.find("created_by", userId);
+}
+
+module.exports.getStatus = async (orderId) => {
+  const validId = isUUID("Order id", orderId);
+
+  const foundOrder = await ordersRepository.findBy("id", validId);
+  if(!foundOrder) { throw new CustomThrowError("Order is not found", 404)}
+
+  return foundOrder.status;
 }

@@ -4,3 +4,5 @@ const { auth } = require("../config/auth");
 
 module.exports.ordersRoutes = Router()
   .post("/", auth, controller.create)
+  .get("/", auth, controller.all)
+  .get("/:id", auth, controller.getStatus)

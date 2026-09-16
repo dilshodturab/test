@@ -10,21 +10,21 @@ module.exports = {
     return result.rows[0];
   },
 
-  async findById(id) {
+  async find(key, value) {
     const result = await pool.query(
-      `select * from orders where id=$1 limit 1`,
-      [id]
+      `select * from orders where ${key} = $1`,
+      [value]
+    );
+
+    return result.rows;
+  },
+
+  async findBy(key, value) {
+    const result = await pool.query(
+      `select * from orders where ${key}=$1 limit 1`,
+      [value]
     );
 
     return result.rows[0] || null;
   },
-
-  async findByIdemKey(key) {
-      const result = await pool.query(
-        `select * from orders where idem_key=$1 limit 1`,
-        [key]
-      );
-
-      return result.rows[0] || null;
-    }
 }

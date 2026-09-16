@@ -19,3 +19,19 @@ module.exports.create = async (req, res, next) => {
     res.status(201).json({ success: true, message: "Order created successfully" });
   } catch(error) { next(error) }
 }
+
+module.exports.all = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const data = await ordersService.findAllOrdersOfUser(userId);
+    return res.status(200).json({ success: true, data });
+  } catch(error) {next(error)}
+}
+
+module.exports.getStatus = async (req, res, next) => {
+  try {
+    const orderId = req.params.id;
+    const status = await ordersService.getStatus(orderId);
+    return res.status(200).json({ success: true, status });
+  } catch(error) {next(error)}
+}
