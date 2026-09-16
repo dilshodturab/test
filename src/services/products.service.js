@@ -2,10 +2,14 @@ const { CustomThrowError } = require("../config/custom-errors");
 const productsRepository = require("../repositories/products.repository")
 
 module.exports.create = async (data) => {
-  const exists = await productsRepository.findBy("name", data.name);
-  if (exists) { throw new CustomThrowError("Product with this name is already exists!", 409) }
-
-  await productsRepository.create(data);
+  try {
+    await productsRepository.create(data);
+  } catch (err) {
+    if (err.code === "23505") {
+      throw new CustomThrowError("Product with this name is already exists!", 409);
+    }
+    throw err;
+  }
 }
 
 module.exports.all = async () => {

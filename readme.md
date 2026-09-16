@@ -15,7 +15,7 @@ Concurrent Order & Inventory Reservation Service
 - [x] orderni cancel qilish.
 - [x] pendingdan confirmedga o'tgazadigan purchase endpoint qilish.
 - [x] 15 minutda status o'zgarmaganlarini pendingga qaytarib qo'yish.
-- [ ] product creationga concurrent correctnes qo'shish.
+- [x] product creationga concurrent correctnes qo'shish.
 - [ ] redis caching qo'shish.
 
 
@@ -34,6 +34,8 @@ Concurrent Order & Inventory Reservation Service
 - client generate qilgan idempotency-keyni uuid bo'lishligi majburiy.
 
 - orderni faqat create qilgan odam cancel qila oladigan qilinishi kerak. Buning uchun order created_by degan columndan foydalanaman.
+
+- product create qilishdagi concurrent correctnes logicasini dbga tashlab qo'yildi. Men har bita H
 
 ## All routes
 users ga tegishli endpointlardan tashqari barcha endpointlar Bearer token so'raydi.
