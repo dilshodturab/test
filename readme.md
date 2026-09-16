@@ -35,7 +35,7 @@ Concurrent Order & Inventory Reservation Service
 
 - orderni faqat create qilgan odam cancel qila oladigan qilinishi kerak. Buning uchun order created_by degan columndan foydalanaman.
 
-- product create qilishdagi concurrent correctnes logicasini dbga tashlab qo'yildi. Men har bita requstning payloadinin heapda ushlab turish ideasi keldi lekin uni qilishga vaqtim bo'lmadi.
+- product create qilishdagi concurrent correctnes logicasini dbga tashlab qo'yildi. Men har bita requstning payloadini heapda ushlab turish ideasi keldi lekin uni qilishga 3 kunni ichida ulgurmadim.
 
 ## All routes
 users ga tegishli endpointlardan tashqari barcha endpointlar Bearer token so'raydi.
