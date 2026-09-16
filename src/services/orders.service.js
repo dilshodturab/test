@@ -11,15 +11,12 @@ module.exports.create = async (data) => {
   if (validIdemKey) { return validIdemKey; }
 
   for (let productId of productsIds) {
-    const foundOrder = await productsRepository.findBy("id", productId);
-    if (!foundOrder) {
-      throw new CustomThrowError(`${productId} is not found`, 404);
-    }
+    const foundProduct = await productsRepository.findBy("id", productId);
+    if (!foundProduct) { throw new CustomThrowError(`${productId} is not found`, 404) }
+    if(foundProduct.stock_quantity <= 0){ throw new CustomThrowError("Not enough stock", 409)}
   }
 
-  for (let productId of productsIds) {
-    await productsRepository.subtractOneById(productId);
-  }
+  for (let productId of productsIds) { await productsRepository.subtractOneById(productId) }
 
   return await ordersRepository.create(data);
 }

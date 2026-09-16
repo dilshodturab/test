@@ -14,8 +14,8 @@ module.exports.create = async (req, res, next) => {
       created_by: req.user.id,
       products: body.products
     }
-    await ordersService.create(data);
 
+    await ordersService.create(data);
     res.status(201).json({ success: true, message: "Order created successfully" });
   } catch(error) { next(error) }
 }

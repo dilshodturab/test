@@ -13,7 +13,7 @@ Concurrent Order & Inventory Reservation Service
 - [x] order createion qilishni idempotent qilish. 
 - [x] get /orders/:id endpoint implementation.
 - [x] orderni cancel qilish.
-- [ ] pendingdan confirmedga o'tgazadigan purchase endpoint qilish.
+- [x] pendingdan confirmedga o'tgazadigan purchase endpoint qilish.
 - [ ] 15 minutda status o'zgarmaganlarini pendingga qaytarib qo'yish.
 - [ ] product creationga concurrent correctnes qo'shish.
 - [ ] redis caching qo'shish.
