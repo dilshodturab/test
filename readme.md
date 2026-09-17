@@ -16,7 +16,7 @@ Concurrent Order & Inventory Reservation Service
 - [x] pendingdan confirmedga o'tgazadigan purchase endpoint qilish.
 - [x] 15 minutda status o'zgarmaganlarini pendingga qaytarib qo'yish.
 - [x] product creationga concurrent correctnes qo'shish.
-- [ ] redis caching qo'shish.
+- [x] redis caching qo'shish.
 
 
 
