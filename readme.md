@@ -1,5 +1,7 @@
 Concurrent Order & Inventory Reservation Service
 
+[dbdiagram.io dagi jadvallar arxitekturasi](https://dbdiagram.io/d/Concurrent-Order-and-Inventory-Reservation-Service-6aab97d3af7c3b0bd101b34c)
+
 ## TODO
 - [x] fayl struktura va kerakli fayllarni yaratib olish.
 - [x] app bootstrap qilish, error handlinglarni chiqish.
