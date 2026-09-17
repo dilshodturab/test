@@ -37,6 +37,8 @@ Concurrent Order & Inventory Reservation Service
 
 - product create qilishdagi concurrent correctnes logicasini dbga tashlab qo'yildi. Men har bita requstning payloadini heapda ushlab turish ideasi keldi lekin uni qilishga 3 kunni ichida ulgurmadim.
 
+- hamma productlarni qaytaradigan endpointimni cache-aside strategiyasini ishlatgan holatda caching qilish. Get qilishda birinchi redisdan so'rab ko'raman agar yo'q bo'lsa dbdan olib redisga yozib keyin responce qilib berib yuboraman. Yangi product yaratilganda eski cacheni o'chirib yuboraman.
+
 ## All routes
 users ga tegishli endpointlardan tashqari barcha endpointlar Bearer token so'raydi.
 

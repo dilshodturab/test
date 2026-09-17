@@ -5,8 +5,10 @@ const { errorHandler } = require("./error-handler");
 const { seedTables } = require("./seeding");
 const { usersRoute } = require("../routes/users.route");
 const { backgroundJob } = require("./background");
+const { connectRedis } = require("./redis-connect");
 
 module.exports.appBootstrapper = async (app) => {
+  await connectRedis()
   await seedTables();
   await backgroundJob();
 
