@@ -2,26 +2,6 @@ Concurrent Order & Inventory Reservation Service
 
 [dbdiagram.io dagi jadvallar arxitekturasi](https://dbdiagram.io/d/Concurrent-Order-and-Inventory-Reservation-Service-6aab97d3af7c3b0bd101b34c)
 
-## TODO
-- [x] fayl struktura va kerakli fayllarni yaratib olish.
-- [x] app bootstrap qilish, error handlinglarni chiqish.
-- [x] dockerizing. 
-- [x] DB schemalarni app bootstrap bo'lganda initialize qilish. 
-- [x] user registration.
-- [x] user login.
-- [x] Auth implementation.
-- [x] Product creation.
-- [x] order creation. work in progress
-- [x] order createion qilishni idempotent qilish. 
-- [x] get /orders/:id endpoint implementation.
-- [x] orderni cancel qilish.
-- [x] pendingdan confirmedga o'tgazadigan purchase endpoint qilish.
-- [x] 15 minutda status o'zgarmaganlarini pendingga qaytarib qo'yish.
-- [x] product creationga concurrent correctnes qo'shish.
-- [x] redis caching qo'shish.
-
-
-
 ## Decisions
 - Jadvallar hozircha 3ta bo'ldi, users jadvalini jwt li authorization talab qilingani uchun qo'shdim. userlardan hozircha username va passwordan boshqa inputlarni kutish ortiqcha deb bildim.
 
