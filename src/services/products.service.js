@@ -6,12 +6,9 @@ const CACHE_TTL = 60 * 60 * 24;
 
 module.exports.create = async (data) => {
   try {
-
     await productsRepository.create(data);
   } catch (err) {
-    if (err.code === "23505") {
-      throw new CustomThrowError("Product with this name is already exists!", 409);
-    }
+    if (err.code === "23505") { throw new CustomThrowError("Product with this name is already exists!", 409); }
     throw err;
   }
 
@@ -21,7 +18,6 @@ module.exports.create = async (data) => {
 }
 
 module.exports.all = async () => {
-
   try {
     const cached = await redisClient.get(CACHE_KEY);
     if(cached) {return JSON.parse(cached)}

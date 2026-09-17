@@ -10,9 +10,7 @@ const generateToken = (user) => {
 
 module.exports.register = async (data) => {
   const existing = await usersRepository.findByUsername(data.username);
-  if (existing) {
-		throw new CustomThrowError("Username already exists", 409);
-	}
+  if (existing) { throw new CustomThrowError("Username already exists", 409) }
 
   const userData = {
     username: data.username,
