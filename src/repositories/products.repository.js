@@ -43,5 +43,36 @@ module.exports = {
     );
 
     return result.rows[0];
-  }
+  },
+
+  async lockByIds(ids, db = pool) {
+    const result = await db.query(
+      `select id, stock_quantity from products
+       where id = any($1::uuid[])
+       order by id
+       for update`,
+      [ids]
+    );
+    return result.rows;
+  },
+
+  async subtractMany(ids, qtys, db = pool) {
+    await db.query(
+      `update products p
+       set stock_quantity = p.stock_quantity - v.qty
+       from unnest($1::uuid[], $2::int[]) as v(id, qty)
+       where p.id = v.id`,
+      [ids, qtys]
+    );
+  },
+
+  async restoreMany(ids, qtys, db = pool) {
+    await db.query(
+      `update products p
+       set stock_quantity = p.stock_quantity + v.qty
+       from unnest($1::uuid[], $2::int[]) as v(id, qty)
+       where p.id = v.id`,
+      [ids, qtys]
+    );
+  },
 }

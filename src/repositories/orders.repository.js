@@ -1,13 +1,24 @@
 const { pool } = require("../config/db-connect")
 
 module.exports = {
-  async create(data, db = pool) {
+  async create({ idem_key, created_by }, db = pool) {
     const result = await db.query(
-      `insert into orders (idem_key, created_by, products) values ($1, $2, $3) returning id`,
-      [data.idem_key, data.created_by, data.products]
+      `insert into orders (idem_key, created_by) values ($1, $2)
+       on conflict (created_by, idem_key) do nothing
+       returning id`,
+      [idem_key, created_by]
     );
+    return result.rows[0] || null;
+  },
 
-    return result.rows[0];
+  async createItems(orderId, ids, qtys, db = pool) {
+    await db.query(
+      `insert into order_items (order_id, product_id, quantity, unit_price)
+       select $1, p.id, v.qty, p.price
+       from unnest($2::uuid[], $3::int[]) as v(id, qty)
+       join products p on p.id = v.id`,
+      [orderId, ids, qtys]
+    );
   },
 
   async find(key, value) {
@@ -43,6 +54,15 @@ module.exports = {
     );
 
     return result.rows;
+  },
+
+  async findByIdemKey(idemKey, userId, db = pool) {
+    const result = await db.query(
+      `select id, status, created_at
+       from orders where idem_key = $1 and created_by = $2`,
+      [idemKey, userId]
+    );
+    return result.rows[0] || null;
   },
 
   async confirm(orderId, db = pool) {

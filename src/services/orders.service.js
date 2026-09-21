@@ -4,27 +4,33 @@ const ordersRepository = require("../repositories/orders.repository");
 const productsRepository = require("../repositories/products.repository");
 
 module.exports.create = async (data) => {
-  const productsIds = data.products;
   const idemKey = isUUID("Idempotency key", data.idem_key);
-
-  const validIdemKey = await ordersRepository.findBy("idem_key", idemKey);
-  if (validIdemKey) { return validIdemKey }
+  const items = data.products;
+  const ids = items.map((p) => p.id);
+  const qtys = items.map((p) => p.quantity);
+  const wanted = new Map(items.map((p) => [p.id, p.quantity]));
 
   return withTransaction(async (client) => {
-    await ordersRepository.create(data, client);
+    const order = await ordersRepository.create({ idem_key: idemKey, created_by: data.created_by }, client);
+    console.log("order", order)
+    if (!order) {
+      const existing = await ordersRepository.findByIdemKey(idemKey, data.created_by, client);
+      return { order: existing, replayed: true };
+    }
 
+    const rows = await productsRepository.lockByIds(ids, client);
+    const stock = new Map(rows.map((r) => [r.id, r.stock_quantity]));
+
+    for (const [id, qty] of wanted) {
+      if (!stock.has(id)) throw new CustomThrowError(`${id} is not found`, 404);
+      if (stock.get(id) < qty) throw new CustomThrowError("Not enough stock", 409);
+    }
+
+    await productsRepository.subtractMany(ids, qtys, client);
+    await ordersRepository.createItems(order.id, ids, qtys, client);
+    return { order, replayed: false };
   });
-
-  for (let productId of productsIds) {
-    const foundProduct = await productsRepository.findBy("id", productId);
-    if (!foundProduct) { throw new CustomThrowError(`${productId} is not found`, 404) }
-    if (foundProduct.stock_quantity <= 0) { throw new CustomThrowError("Not enough stock", 409) }
-  }
-
-  for (let productId of productsIds) { await productsRepository.subtractOneById(productId) }
-
-  return await ordersRepository.create(data);
-}
+};
 
 module.exports.findAllOrdersOfUser = async (userId) => {
   return await ordersRepository.find("created_by", userId);
