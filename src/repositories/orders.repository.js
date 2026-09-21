@@ -1,8 +1,8 @@
 const { pool } = require("../config/db-connect")
 
 module.exports = {
-  async create(data) {
-    const result = await pool.query(
+  async create(data, db = pool) {
+    const result = await db.query(
       `insert into orders (idem_key, created_by, products) values ($1, $2, $3) returning id`,
       [data.idem_key, data.created_by, data.products]
     );
@@ -45,8 +45,8 @@ module.exports = {
     return result.rows;
   },
 
-  async confirm(orderId) {
-    const result = await pool.query(
+  async confirm(orderId, db = pool) {
+    const result = await db.query(
       `update orders set status = 'confirmed' where id = $1 returning status`,
       [orderId]
     );
@@ -54,8 +54,8 @@ module.exports = {
     return result.rows[0];
   },
 
-  async cancel(orderId) {
-    const result = await pool.query(
+  async cancel(orderId, db = pool) {
+    const result = await db.query(
       `update orders set status = 'cancelled' where id=$1 returning status`,
       [orderId]
     );
