@@ -61,13 +61,21 @@ const cancelAndRestoreStock = (orderId) => withTransaction(async (client) => {
 
 module.exports.autoCancelOrders = async () => {
   const orders = await ordersRepository.findPendingOrders();
+  let cancelledCnt = 0;
 
   for (const order of orders) {
     try {
-      await cancelAndRestoreStock(order.id);
+      const cancelled = await cancelAndRestoreStock(order.id);
+      if (cancelled) cancelledCnt++;
     } catch (error) {
       console.log(`Auto-cancel failed for order ${order.id}:`, error.message);
     }
+  }
+
+  if (cancelledCnt > 0) {
+    try {
+      await redisClient.del(PRODUCTS_CACHE_KEY);
+    } catch (error) { console.log(error) }
   }
 };
 
