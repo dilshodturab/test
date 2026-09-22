@@ -39,6 +39,15 @@ module.exports = {
     return result.rows[0] || null;
   },
 
+  async findOrder({ orderId, userId }) {
+    const result = await pool.query(
+      `select * from orders where id=$1 and created_by=$2`,
+      [orderId, userId]
+    );
+
+    return result.rows[0] || null;
+  },
+
   async customFind(orderId, userId) {
     const result = await pool.query(
       `select * from orders where id= $1 and created_by = $2`,

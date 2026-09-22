@@ -44,10 +44,8 @@ module.exports.autoCancelOrders = async () => {
   }
 }
 
-module.exports.getStatus = async (orderId) => {
-  const validId = isUUID("Order id", orderId);
-
-  const foundOrder = await ordersRepository.findBy("id", validId);
+module.exports.getStatus = async (data) => {
+  const foundOrder = await ordersRepository.findOrder(data);
   if (!foundOrder) { throw new CustomThrowError("Order is not found", 404) }
 
   return foundOrder.status;
