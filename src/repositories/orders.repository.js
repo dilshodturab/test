@@ -74,6 +74,15 @@ module.exports = {
     return result.rows[0] || null;
   },
 
+  async findItems(orderId, db = pool) {
+    const result = await db.query(
+      `select product_id as id, quantity from order_items where order_id = $1`,
+      [orderId]
+    );
+
+    return result.rows;
+  },
+
   async confirm(orderId, db = pool) {
     const result = await db.query(
       `update orders set status = 'confirmed' where id = $1 returning status`,
@@ -81,6 +90,16 @@ module.exports = {
     );
 
     return result.rows[0];
+  },
+
+  async cancelIfPending(orderId, db = pool) {
+    const result = await db.query(
+      `update orders set status = 'cancelled'
+       where id = $1 and status = 'pending'
+       returning id, status, created_at`,
+      [orderId]
+    );
+    return result.rows[0] || null;
   },
 
   async cancel(orderId, db = pool) {
